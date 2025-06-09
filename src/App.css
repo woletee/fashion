@@ -196,3 +196,41 @@ h2 {
 .upload-prompt button:hover {
   background: #222222;
 }
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  max-width: 500px;
+  margin: 2rem auto;
+}
+
+.upload-form input[type='text'],
+.upload-form input[type='file'] {
+  padding: 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 15px;
+  width: 100%;
+}
+
+.upload-btn {
+  margin-top: 1.5rem;
+  background: #7e3af2;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.upload-btn:hover {
+  background: #5a21b8;
+}
+
