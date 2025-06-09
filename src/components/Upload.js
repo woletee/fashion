@@ -100,13 +100,23 @@ function Upload() {
             placeholder="Tags (e.g., Casual, Denim)"
             required
           />
-          <input
-            type="file"
-            name="image"
-            onChange={handleChange}
-            accept="image/*"
-            required
-          />
+            <input
+        type="file"
+        name="image"
+        accept="image/*"
+        capture="environment" // Prompts camera on mobile
+        onChange={handleChange}
+        required
+      />
+            {/*  */}
+  {form.image && (
+    <img
+      src={URL.createObjectURL(form.image)}
+      alt="Preview"
+      style={{ width: '100%', marginTop: '1rem', borderRadius: '10px' }}
+    />
+  )}
+
         </div>
         <button type="submit" className="upload-btn">Upload Item</button>
       </form>
