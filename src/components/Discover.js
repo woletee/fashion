@@ -5,7 +5,7 @@ function Discover() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/wardrobe/discover')
+    fetch('https://wardrobestudio.net/wardrobe/discover')
       .then(res => res.json())
       .then(data => {
         if (data.suggestions && Array.isArray(data.suggestions)) {
