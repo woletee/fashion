@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const API_BASE = 'https://wardrobestudio.net/'; // ❗ no trailing space
+const API_BASE = 'https://wardrobestudio.net'; // ❗ no trailing space
 
 function Upload() {
   const [form, setForm] = useState({
