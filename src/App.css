@@ -41,14 +41,24 @@ h2 {
 }
 
 .nav-icon {
-  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
   text-align: center;
   color: #666;
   text-decoration: none;
   padding: 0.6rem 1.2rem;
   border-radius: 16px;
-  transition: 0.3s;
+  transition: all 0.3s ease;
   font-weight: 600;
+  min-width: 80px;
+}
+
+.nav-icon svg {
+  font-size: 20px;
+  margin-bottom: 4px;
 }
 
 .nav-icon.active {
@@ -58,7 +68,10 @@ h2 {
 }
 
 .nav-icon:hover {
-  background-color: #f4f4f4;
+  background-color: #f3f3f3;
+  color: #000;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 /* Wardrobe Grid */
