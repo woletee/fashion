@@ -5,7 +5,7 @@ function Outfit() {
   const [weather, setWeather] = useState('');
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/recommendation/today')
+    fetch('http://54.174.88.108:8000/recommendation/today')
       .then(res => res.json())
       .then(data => {
         setWeather(data.weather);
