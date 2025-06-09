@@ -52,26 +52,27 @@ h2 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 17px;
   text-align: center;
   color: #666;
   text-decoration: none;
   padding: 0.5rem;
   border-radius: 12px;
   transition: all 0.3s ease;
-  font-weight: 600;
+  font-weight: 800;
   min-width: 60px;
   flex: 1;
   max-width: 80px;
 }
 
 .nav-icon svg {
-  font-size: 20px;
+  font-size: 24px;
   margin-bottom: 4px;
 }
 
 .nav-icon span {
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .nav-icon.active {
@@ -90,10 +91,11 @@ h2 {
 /* Wardrobe Grid */
 .wardrobe-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(2, 1fr); /* Force 2 columns */
   gap: 18px;
   margin-top: 2rem;
 }
+
 
 .clothing-item {
   background: #ffffff;
@@ -124,10 +126,18 @@ h2 {
 /* Filters */
 .filters {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  justify-content: flex-start;
+  flex-wrap: nowrap; /* No wrap */
   gap: 12px;
   margin: 1.5rem 0 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+.filters::-webkit-scrollbar {
+  display: none;  /* Chrome/Safari */
 }
 
 .filters button {
