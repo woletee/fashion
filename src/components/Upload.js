@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-const API_BASE = 'https://wardrobestudio.net'; // ✅ No trailing slash
+const API_BASE = 'https://wardrobestudio.net';
+
 function Upload() {
   const [form, setForm] = useState({
     name: '',
@@ -55,16 +56,59 @@ function Upload() {
   };
 
   return (
-    <div>
+    <div className="screen">
       <h2>Upload Clothing Item</h2>
-      <form onSubmit={handleSubmit}>
-        <input name="name" value={form.name} onChange={handleChange} placeholder="Item Name" required />
-        <input name="category" value={form.category} onChange={handleChange} placeholder="Category" required />
-        <input name="color" value={form.color} onChange={handleChange} placeholder="Color" required />
-        <input name="season" value={form.season} onChange={handleChange} placeholder="Season" required />
-        <input name="style_tags" value={form.style_tags} onChange={handleChange} placeholder="Tags" required />
-        <input type="file" name="image" onChange={handleChange} accept="image/*" required />
-        <button type="submit">Upload</button>
+      <form className="upload-form" onSubmit={handleSubmit}>
+        <div className="form-grid">
+          <input
+            type="text"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            placeholder="Item Name"
+            required
+          />
+          <input
+            type="text"
+            name="category"
+            value={form.category}
+            onChange={handleChange}
+            placeholder="Category (e.g., Tops)"
+            required
+          />
+          <input
+            type="text"
+            name="color"
+            value={form.color}
+            onChange={handleChange}
+            placeholder="Color"
+            required
+          />
+          <input
+            type="text"
+            name="season"
+            value={form.season}
+            onChange={handleChange}
+            placeholder="Season (e.g., Summer)"
+            required
+          />
+          <input
+            type="text"
+            name="style_tags"
+            value={form.style_tags}
+            onChange={handleChange}
+            placeholder="Tags (e.g., Casual, Denim)"
+            required
+          />
+          <input
+            type="file"
+            name="image"
+            onChange={handleChange}
+            accept="image/*"
+            required
+          />
+        </div>
+        <button type="submit" className="upload-btn">Upload Item</button>
       </form>
     </div>
   );
