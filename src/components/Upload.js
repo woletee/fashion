@@ -100,14 +100,19 @@ function Upload() {
             placeholder="Tags (e.g., Casual, Denim)"
             required
           />
-            <input
-        type="file"
-        name="image"
-        accept="image/*"
-        capture="environment" // Prompts camera on mobile
-        onChange={handleChange}
-        required
-      />
+          <label htmlFor="imageUpload" className="upload-btn">
+  📷 Choose or Take a Photo
+</label>
+<input
+  type="file"
+  id="imageUpload"
+  name="image"
+  accept="image/*"
+  onChange={handleChange}
+  required
+  style={{ display: 'none' }}
+/>
+
             {/*  */}
   {form.image && (
     <img
