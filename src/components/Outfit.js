@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Outfit.css'; // Make sure images look nice here
+import './Outfit.css'; // Styling for grid, boxes, images
 
 function Outfit() {
   const [weeklyOutfits, setWeeklyOutfits] = useState([]);
@@ -42,13 +42,15 @@ function Outfit() {
             <div key={idx} className="day-card">
               <h4>{entry.day}</h4>
               {entry.outfits.map((outfit, i) => (
-                <div key={i} className="outfit-images">
-                  {[outfit.top, outfit.bottom, outfit.shoes].map((item, j) => (
-                    <div key={j} className="outfit-item">
-                      <img src={item.image} alt={item.name} />
-                      <p>{item.name}</p>
-                    </div>
-                  ))}
+                <div key={i} className="outfit-group">
+                  <div className="outfit-images">
+                    {[outfit.top, outfit.bottom, outfit.shoes].map((item, j) => (
+                      <div key={j} className="outfit-item">
+                        <img src={item.image} alt={item.name} />
+                        <p>{item.name}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
