@@ -10,7 +10,7 @@ function Outfit() {
     setLoading(true);
     setError('');
 
-    fetch('https://wardrobestudio.net/outfit/weekly')
+    fetch('https://wardrobestudio.net/outfit/weekly') // ✅ Change this if your backend runs somewhere else
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -41,20 +41,22 @@ function Outfit() {
           {weeklyOutfits.map((entry, idx) => (
             <div key={idx} className="day-card">
               <h4>{entry.day}</h4>
-              <div className="items-grid">
-                {['top', 'bottom', 'shoes'].map(type => (
-                  entry[type] && (
-                    <div key={type} className="clothing-item">
-                      <img
-                        src={`https://wardrobestudio.net/${entry[type].image_url}`}
-                        alt={entry[type].name}
-                        className="item-img"
-                      />
-                      <p>{entry[type].name}</p>
-                    </div>
-                  )
-                ))}
-              </div>
+              {entry.outfits.map((outfit, i) => (
+                <div key={i} className="items-grid">
+                  {['top', 'bottom', 'shoes'].map(type => (
+                    outfit[type] && (
+                      <div key={type} className="clothing-item">
+                        <img
+                          src={`https://wardrobestudio.net/${outfit[type].image_url}`}
+                          alt={outfit[type].name}
+                          className="item-img"
+                        />
+                        <p>{outfit[type].name}</p>
+                      </div>
+                    )
+                  ))}
+                </div>
+              ))}
             </div>
           ))}
         </div>
