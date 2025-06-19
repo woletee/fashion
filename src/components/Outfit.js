@@ -10,7 +10,7 @@ function Outfit() {
     setLoading(true);
     setError('');
 
-    fetch('https://backend-fashion-8.onrender.com/outfit/weekly')
+    fetch('https://wardrobestudio.net/outfit/weekly')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
