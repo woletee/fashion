@@ -26,11 +26,11 @@ const handleSubmit = async (e) => {
 
   const fallbackForm = {
     ...form,
-    name: form.name || 'Untitled',
-    category: form.category || 'Uncategorized',
-    color: form.color || 'Unknown',
-    season: form.season || 'Any',
-    style_tags: form.style_tags || 'None',
+    name: form.name || 't-shirt',
+    category: form.category || 'top',
+    color: form.color || 'black',
+    season: form.season || 'summer',
+    style_tags: form.style_tags || 'causal',
   };
 
   for (const key in fallbackForm) {
