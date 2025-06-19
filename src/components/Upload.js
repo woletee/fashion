@@ -26,11 +26,11 @@ const handleSubmit = async (e) => {
 
   const fallbackForm = {
     ...form,
-    name: form.name || 't-shirt',
-    category: form.category || 'top',
-    color: form.color || 'black',
-    season: form.season || 'summer',
-    style_tags: form.style_tags || 'causal',
+    name: form.name || 'Untitled',
+    category: form.category || 'Uncategorized',
+    color: form.color || 'Unknown',
+    season: form.season || 'Any',
+    style_tags: form.style_tags || 'None',
   };
 
   for (const key in fallbackForm) {
@@ -42,7 +42,7 @@ const handleSubmit = async (e) => {
 
 
     try {
-      const res = await fetch(`${API_BASE}/wardrobe/upload`, {
+      const res = await fetch(${API_BASE}/wardrobe/upload, {
         method: 'POST',
         body: formData
       });
