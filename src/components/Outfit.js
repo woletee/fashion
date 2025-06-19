@@ -44,12 +44,14 @@ function Outfit() {
               {entry.outfits.map((outfit, i) => (
                 <div key={i} className="outfit-group">
                   <div className="outfit-images">
-                    {[outfit.top, outfit.bottom, outfit.shoes].map((item, j) => (
-                      <div key={j} className="outfit-item">
-                        <img src={item.image} alt={item.name} />
-                        <p>{item.name}</p>
-                      </div>
-                    ))}
+                    {[outfit.top, outfit.bottom, outfit.shoes].map((item, j) =>
+                      item ? (
+                        <div key={j} className="outfit-item">
+                          <img src={item.image} alt={item.name} />
+                          <p>{item.name}</p>
+                        </div>
+                      ) : null
+                    )}
                   </div>
                 </div>
               ))}
