@@ -1,31 +1,10 @@
 import React, { useState } from 'react';
-import './Outfit.css'; // Optional styling
+import './Outfit.css'; // Make sure images look nice here
 
 function Outfit() {
   const [weeklyOutfits, setWeeklyOutfits] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  const parseOutfitsByDay = (rawText) => {
-    const lines = rawText.split('\n').map(line => line.trim()).filter(line => line !== '');
-    const result = [];
-    let currentDay = null;
-
-    for (const line of lines) {
-      if (/^- [A-Za-z]+:/.test(line)) {
-        // New day section
-        currentDay = {
-          day: line.replace(/^- /, '').replace(':', ''),
-          outfits: []
-        };
-        result.push(currentDay);
-      } else if (line.startsWith('-') && currentDay) {
-        currentDay.outfits.push(line.replace(/^- /, ''));
-      }
-    }
-
-    return result;
-  };
 
   const handleGetSuggestions = () => {
     setLoading(true);
@@ -34,9 +13,8 @@ function Outfit() {
     fetch('https://wardrobestudio.net/outfit/weekly')
       .then(res => res.json())
       .then(data => {
-        if (typeof data.outfits === 'string') {
-          const structured = parseOutfitsByDay(data.outfits);
-          setWeeklyOutfits(structured);
+        if (Array.isArray(data.outfits)) {
+          setWeeklyOutfits(data.outfits);
         } else {
           setError(data.detail || 'Unexpected response format.');
         }
@@ -63,11 +41,16 @@ function Outfit() {
           {weeklyOutfits.map((entry, idx) => (
             <div key={idx} className="day-card">
               <h4>{entry.day}</h4>
-              <ul>
-                {entry.outfits.map((outfit, i) => (
-                  <li key={i}>{outfit}</li>
-                ))}
-              </ul>
+              {entry.outfits.map((outfit, i) => (
+                <div key={i} className="outfit-images">
+                  {[outfit.top, outfit.bottom, outfit.shoes].map((item, j) => (
+                    <div key={j} className="outfit-item">
+                      <img src={item.image} alt={item.name} />
+                      <p>{item.name}</p>
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
           ))}
         </div>
