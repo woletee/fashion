@@ -34,7 +34,7 @@ function Outfit() {
     fetch('https://wardrobestudio.net/outfit/weekly')
       .then(res => res.json())
       .then(data => {
-        if (data.outfits) {
+        if (typeof data.outfits === 'string') {
           const structured = parseOutfitsByDay(data.outfits);
           setWeeklyOutfits(structured);
         } else {
