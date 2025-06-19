@@ -6,15 +6,37 @@ function Outfit() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const parseOutfitsByDay = (rawText) => {
+    const lines = rawText.split('\n').map(line => line.trim()).filter(line => line !== '');
+    const result = [];
+    let currentDay = null;
+
+    for (const line of lines) {
+      if (/^- [A-Za-z]+:/.test(line)) {
+        // New day section
+        currentDay = {
+          day: line.replace(/^- /, '').replace(':', ''),
+          outfits: []
+        };
+        result.push(currentDay);
+      } else if (line.startsWith('-') && currentDay) {
+        currentDay.outfits.push(line.replace(/^- /, ''));
+      }
+    }
+
+    return result;
+  };
+
   const handleGetSuggestions = () => {
     setLoading(true);
     setError('');
 
-    fetch('https://wardrobestudio.net/outfit/weekly') // ✅ Change this if your backend runs somewhere else
+    fetch('https://wardrobestudio.net/outfit/weekly')
       .then(res => res.json())
       .then(data => {
-        if (Array.isArray(data)) {
-          setWeeklyOutfits(data);
+        if (data.outfits) {
+          const structured = parseOutfitsByDay(data.outfits);
+          setWeeklyOutfits(structured);
         } else {
           setError(data.detail || 'Unexpected response format.');
         }
@@ -41,22 +63,11 @@ function Outfit() {
           {weeklyOutfits.map((entry, idx) => (
             <div key={idx} className="day-card">
               <h4>{entry.day}</h4>
-              {entry.outfits.map((outfit, i) => (
-                <div key={i} className="items-grid">
-                  {['top', 'bottom', 'shoes'].map(type => (
-                    outfit[type] && (
-                      <div key={type} className="clothing-item">
-                        <img
-                          src={`https://wardrobestudio.net/${outfit[type].image_url}`}
-                          alt={outfit[type].name}
-                          className="item-img"
-                        />
-                        <p>{outfit[type].name}</p>
-                      </div>
-                    )
-                  ))}
-                </div>
-              ))}
+              <ul>
+                {entry.outfits.map((outfit, i) => (
+                  <li key={i}>{outfit}</li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>
