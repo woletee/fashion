@@ -1,0 +1,33 @@
+.screen {
+  padding: 20px;
+}
+
+.fetch-button {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 20px;
+  border-radius: 6px;
+}
+
+.suggestions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.suggestion-card {
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.item-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
