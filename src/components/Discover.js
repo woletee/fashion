@@ -7,7 +7,7 @@ function Discover() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('https://wardrobestudio.net/discover/analysis')
+    fetch('https://wardrobestudio.net/discover/missing')
       .then(res => res.json())
       .then(setAnalysis)
       .catch(() => setError('Failed to load wardrobe analysis.'));
