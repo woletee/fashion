@@ -1,63 +1,79 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import './Discover.css'; // Optional CSS for styling
 
 function Discover() {
-  const [wardrobe, setWardrobe] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
+  const [trending, setTrending] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  useEffect(() => {
-    fetch('https://wardrobestudio.net/wardrobe/items')
-      .then(res => res.json())
-      .then(data => {
-        console.log("🧥 Wardrobe:", data);
-        setWardrobe(data);
-      })
-      .catch(err => console.error('Error loading wardrobe:', err));
-  }, []);
-
-  const handleGetRecommendations = async () => {
+  const fetchDiscoverData = () => {
     setLoading(true);
-    try {
-      const imageUrls = wardrobe.map(item => `https://wardrobestudio.net/${item.image_url}`);
-      console.log("📤 Sending image URLs:", imageUrls);
+    setError('');
 
-      const res = await fetch('https://backend-fashion-6.onrender.com/discover/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image_urls: imageUrls }),
-      });
+    Promise.all([
+      fetch('https://wardrobestudio.net/discover/recommendations').then(res => res.json()),
+      fetch('https://wardrobestudio.net/discover/trending').then(res => res.json())
+    ])
+      .then(([recData, trendData]) => {
+        if (Array.isArray(recData.suggestions)) {
+          setRecommendations(recData.suggestions);
+        } else {
+          setError('Could not load wardrobe suggestions.');
+        }
 
-      const data = await res.json();
-      console.log("✅ Got recommendations:", data);
-      setRecommendations(data);
-    } catch (error) {
-      console.error('Error fetching recommendations:', error);
-    }
-    setLoading(false);
+        if (Array.isArray(trendData.trending)) {
+          setTrending(trendData.trending);
+        } else {
+          setError('Could not load trending fashion.');
+        }
+      })
+      .catch(err => {
+        console.error('❌ Error fetching discover data:', err);
+        setError('Failed to load discover info.');
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
     <div className="screen">
-      <h2>Discover Recommendations</h2>
+      <h2 style={{ marginBottom: '20px' }}>🔎 Discover</h2>
 
-      <button onClick={handleGetRecommendations} disabled={loading}>
-        {loading ? 'Analyzing wardrobe...' : 'Get Recommendations'}
+      <button className="fetch-button" onClick={fetchDiscoverData} disabled={loading}>
+        {loading ? '🔄 Loading suggestions...' : '✨ Discover What to Wear Next'}
       </button>
 
-      {Array.isArray(recommendations) && recommendations.length > 0 && (
-        <div className="recommendation-box">
-          <h3>What’s Missing in Your Wardrobe:</h3>
-          <div className="recommendation-grid">
-            {recommendations.map((rec, idx) => (
-              <div key={idx} className="recommendation-item" style={{ marginBottom: '20px' }}>
-                <img
-                  src={rec.image_url}
-                  alt={rec.missing_item}
-                  style={{ width: '120px', borderRadius: '8px' }}
-                />
-                <p>You might need more <strong>{rec.missing_item}</strong></p>
-                <a href={rec.suggest_link} target="_blank" rel="noopener noreferrer">
-                  Shop Now
+      {error && <p style={{ color: 'red', marginTop: '15px' }}>{error}</p>}
+
+      {!loading && recommendations.length > 0 && (
+        <div>
+          <h3 style={{ marginTop: '30px' }}>🧩 What You Might Need Next</h3>
+          <div className="suggestions-grid">
+            {recommendations.map((item, idx) => (
+              <div key={idx} className="suggestion-card">
+                <img src={item.image} alt={item.name} className="item-img" />
+                <h4>{item.name}</h4>
+                <p>{item.reason}</p>
+                <a href={item.url} target="_blank" rel="noopener noreferrer">
+                  🛒 Buy Now
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {!loading && trending.length > 0 && (
+        <div>
+          <h3 style={{ marginTop: '30px' }}>🔥 Trending Now</h3>
+          <div className="suggestions-grid">
+            {trending.map((item, idx) => (
+              <div key={idx} className="suggestion-card">
+                <img src={item.image} alt={item.name} className="item-img" />
+                <h4>{item.name}</h4>
+                <p>{item.description}</p>
+                <a href={item.url} target="_blank" rel="noopener noreferrer">
+                  👗 Explore
                 </a>
               </div>
             ))}
