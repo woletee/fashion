@@ -20,26 +20,12 @@ function Upload() {
     });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const formData = new FormData();
-
-  const fallbackForm = {
-    ...form,
-    name: form.name || 'Untitled',
-    category: form.category || 'Uncategorized',
-    color: form.color || 'Unknown',
-    season: form.season || 'Any',
-    style_tags: form.style_tags || 'None',
-  };
-
-  for (const key in fallbackForm) {
-    formData.append(key, fallbackForm[key]);
-  }
-
-  // Continue with fetch...
-};
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    for (const key in form) {
+      formData.append(key, form[key]);
+    }
 
     try {
       const res = await fetch(${API_BASE}/wardrobe/upload, {
