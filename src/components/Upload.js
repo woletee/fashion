@@ -14,10 +14,10 @@ function Upload() {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setForm({
-      ...form,
+    setForm((prevForm) => ({
+      ...prevForm,
       [name]: files ? files[0] : value
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -28,7 +28,7 @@ function Upload() {
     }
 
     try {
-      const res = await fetch(${API_BASE}/wardrobe/upload, {
+      const res = await fetch(`${API_BASE}/wardrobe/upload`, {
         method: 'POST',
         body: formData
       });
@@ -36,7 +36,7 @@ function Upload() {
       const resText = await res.text();
 
       if (res.ok) {
-        alert('Upload successful!');
+        alert('✅ Upload successful!');
         setForm({
           name: '',
           category: '',
@@ -46,18 +46,18 @@ function Upload() {
           image: null
         });
       } else {
-        console.error('Upload failed:', resText);
+        console.error('❌ Upload failed:', resText);
         alert('Upload failed: ' + res.status);
       }
     } catch (error) {
-      console.error('Upload error:', error);
+      console.error('🚨 Upload error:', error);
       alert('Error uploading');
     }
   };
 
   return (
     <div className="screen">
-      <h2>Upload Clothing Item</h2>
+      <h2>📤 Upload Clothing Item</h2>
       <form className="upload-form" onSubmit={handleSubmit}>
         <div className="form-grid">
           <input
@@ -100,30 +100,32 @@ function Upload() {
             placeholder="Tags (e.g., Casual, Denim)"
             required
           />
+
           <label htmlFor="imageUpload" className="upload-btn">
-  📷 Choose or Take a Photo
-</label>
-<input
-  type="file"
-  id="imageUpload"
-  name="image"
-  accept="image/*"
-  onChange={handleChange}
-  required
-  style={{ display: 'none' }}
-/>
+            📷 Choose or Take a Photo
+          </label>
+          <input
+            type="file"
+            id="imageUpload"
+            name="image"
+            accept="image/*"
+            onChange={handleChange}
+            required
+            style={{ display: 'none' }}
+          />
 
-            {/*  */}
-  {form.image && (
-    <img
-      src={URL.createObjectURL(form.image)}
-      alt="Preview"
-      style={{ width: '100%', marginTop: '1rem', borderRadius: '10px' }}
-    />
-  )}
-
+          {form.image && (
+            <img
+              src={URL.createObjectURL(form.image)}
+              alt="Preview"
+              style={{ width: '100%', marginTop: '1rem', borderRadius: '10px' }}
+            />
+          )}
         </div>
-        <button type="submit" className="upload-btn">Upload Item</button>
+
+        <button type="submit" className="upload-btn">
+          Upload Item
+        </button>
       </form>
     </div>
   );
