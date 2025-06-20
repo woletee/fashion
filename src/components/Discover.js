@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';Add commentMore actions
+import React, { useEffect, useState } from 'react';
 import './Discover.css';
 
 function Discover() {
