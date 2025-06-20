@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import './Outfit.css'; // Make sure styles are correct
 import React, { useEffect, useState } from 'react';
+import './Outfit.css';
 
 function Outfit() {
   const [weeklyOutfits, setWeeklyOutfits] = useState([]);
@@ -14,6 +13,21 @@ function Outfit() {
     setError('');
 
     fetch('https://wardrobestudio.net/outfit/weekly')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data.outfits)) {
+          setWeeklyOutfits(data.outfits);
+        } else {
+          setError(data.detail || 'Unexpected response format.');
+        }
+      })
+      .catch(err => {
+        console.error('Failed to get outfit suggestion:', err);
+        setError('Error fetching suggestion. Try again later.');
+      })
+      .finally(() => setLoading(false));
+  };
+
   useEffect(() => {
     fetch('https://wardrobestudio.net/recommendation/today')
       .then(res => res.json())
@@ -31,10 +45,6 @@ function Outfit() {
         setError('Error fetching outfit suggestions.');
       })
       .finally(() => setLoading(false));
-  };
-        console.error('Failed to get outfit suggestion:', err);
-        setSuggestion('Error fetching suggestion. Try again later.');
-      });
   }, []);
 
   return (
@@ -80,3 +90,5 @@ function Outfit() {
     </div>
   );
 }
+
+export default Outfit;
