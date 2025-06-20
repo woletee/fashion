@@ -1,4 +1,4 @@
-import React, { useState } from 'react';Add commentMore actions
+import React, { useState } from 'react';
 import './Outfit.css'; // Make sure styles are correct
 import React, { useEffect, useState } from 'react';
 
