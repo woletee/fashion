@@ -10,7 +10,6 @@ function Discover() {
   useEffect(() => {
     // Fetch analysis data
     fetch('https://wardrobestudio.net/discover/analysis')
-    fetch('https://wardrobestudio.net/wardrobe/discover')
       .then(res => res.json())
       .then(setAnalysis)
       .catch(() => setError('Failed to load wardrobe analysis.'));
@@ -63,7 +62,7 @@ function Discover() {
               rel="noreferrer"
               style={{ marginLeft: '8px' }}
             >
-               Find Online
+              Find Online
             </a>
           </li>
         ))}
@@ -84,10 +83,9 @@ function Discover() {
         </div>
       )}
 
-      {/* Optional: Show trending items */}
       {trending.length > 0 && (
         <>
-          <h3> Trending Picks</h3>
+          <h3>Trending Picks</h3>
           <div className="product-grid">
             {trending.map((p, i) => (
               <div key={i} className="product-card">
@@ -102,3 +100,5 @@ function Discover() {
     </div>
   );
 }
+
+export default Discover;
